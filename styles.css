@@ -1,0 +1,313 @@
+/* =========================
+   Base + Theme
+   ========================= */
+:root {
+  --bg-1: #ffe6f3;
+  --bg-2: #e8f0ff;
+  --bg-3: #eafff1;
+
+  --card: rgba(255, 255, 255, 0.9);
+  --text: #2b2b2b;
+  --muted: rgba(43, 43, 43, 0.75);
+
+  --shadow: 0 18px 45px rgba(30, 20, 60, 0.12);
+
+  --pink: #ff4fa3;
+  --pink-2: #ff7fc1;
+
+  --neutral: rgba(40, 40, 50, 0.08);
+  --neutral-border: rgba(40, 40, 50, 0.12);
+
+  /* Used by JS to grow the Yes button */
+  --yes-scale: 1;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial,
+    "Apple Color Emoji", "Segoe UI Emoji";
+  color: var(--text);
+  background: radial-gradient(900px 600px at 15% 20%, var(--bg-1), transparent 60%),
+    radial-gradient(900px 600px at 85% 20%, var(--bg-2), transparent 60%),
+    radial-gradient(900px 700px at 50% 95%, var(--bg-3), transparent 60%),
+    linear-gradient(135deg, #fff, #f7fbff);
+  overflow-x: hidden;
+}
+
+.page {
+  min-height: 100%;
+  display: grid;
+  place-items: center;
+  padding: 28px 18px;
+}
+
+/* =========================
+   Card
+   ========================= */
+.card {
+  width: min(560px, 92vw);
+  background: var(--card);
+  border: 1px solid rgba(255, 255, 255, 0.85);
+  border-radius: 22px;
+  box-shadow: var(--shadow);
+  position: relative;
+  padding: 26px 22px 22px;
+  text-align: center;
+  backdrop-filter: blur(8px);
+  animation: floaty 4.5s ease-in-out infinite;
+}
+
+.card__decor {
+  position: absolute;
+  inset: -2px;
+  border-radius: 24px;
+  pointer-events: none;
+  background: radial-gradient(900px 300px at 10% 0%, rgba(255, 79, 163, 0.13), transparent 55%),
+    radial-gradient(900px 300px at 90% 0%, rgba(115, 190, 255, 0.16), transparent 55%),
+    radial-gradient(700px 350px at 50% 110%, rgba(140, 255, 200, 0.16), transparent 60%);
+  filter: saturate(1.05);
+  opacity: 0.9;
+}
+
+.card__header {
+  position: relative;
+  z-index: 1;
+}
+
+.title {
+  margin: 0;
+  font-size: clamp(1.6rem, 4.5vw, 2.25rem);
+  letter-spacing: -0.02em;
+  line-height: 1.12;
+  text-shadow: 0 10px 24px rgba(255, 79, 163, 0.08);
+  animation: titleWiggle 3.2s ease-in-out infinite;
+}
+
+.subtitle {
+  margin: 10px 0 0;
+  color: var(--muted);
+  font-size: clamp(1rem, 2.7vw, 1.05rem);
+}
+
+.hint {
+  margin: 14px 0 0;
+  color: rgba(43, 43, 43, 0.65);
+  font-size: 0.95rem;
+}
+
+/* Accepted state */
+.card.accepted {
+  border-color: rgba(255, 79, 163, 0.25);
+  box-shadow: 0 22px 60px rgba(255, 79, 163, 0.12),
+    0 18px 45px rgba(30, 20, 60, 0.1);
+}
+
+/* =========================
+   Button area (relative container)
+   ========================= */
+.button-area {
+  position: relative;
+  margin: 22px auto 0;
+  width: min(420px, 90%);
+  height: 120px;
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.55);
+  border: 1px solid rgba(0, 0, 0, 0.04);
+  overflow: hidden;
+  z-index: 1;
+}
+
+.button-area.is-disabled {
+  opacity: 0.6;
+  pointer-events: none;
+  transform: scale(0.99);
+  transition: opacity 220ms ease, transform 220ms ease;
+}
+
+/* =========================
+   Buttons (absolute inside button area)
+   ========================= */
+.btn {
+  position: absolute;
+  top: 50%;
+  padding: 12px 18px;
+  border-radius: 999px;
+  border: 1px solid transparent;
+  font-size: 1rem;
+  font-weight: 700;
+  cursor: pointer;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+
+  /* Center by default (we set left/top for each button) */
+  transform: translate(-50%, -50%);
+  transition: transform 220ms ease, filter 220ms ease, box-shadow 220ms ease,
+    opacity 400ms ease;
+}
+
+.btn:focus-visible {
+  outline: 3px solid rgba(255, 79, 163, 0.35);
+  outline-offset: 3px;
+}
+
+.btn--yes {
+  left: 30%;
+  background: linear-gradient(135deg, var(--pink), var(--pink-2));
+  color: white;
+  box-shadow: 0 12px 26px rgba(255, 79, 163, 0.25);
+  transform: translate(-50%, -50%) scale(var(--yes-scale));
+}
+
+.btn--yes:hover {
+  filter: brightness(1.03);
+}
+
+.btn--no {
+  /* JS will place this precisely in px so it can run away within bounds */
+  left: 70%;
+  background: rgba(255, 255, 255, 0.85);
+  color: rgba(30, 30, 35, 0.85);
+  border-color: var(--neutral-border);
+  box-shadow: 0 10px 22px rgba(30, 20, 60, 0.08);
+}
+
+.btn--no:hover {
+  background: rgba(255, 255, 255, 0.95);
+}
+
+/* Fade-out when timer ends */
+.btn--no.is-gone {
+  opacity: 0;
+  pointer-events: none; /* required */
+  transform: translate(-50%, -50%) scale(0.92);
+}
+
+/* =========================
+   Big heart pop
+   ========================= */
+.heart-pop {
+  position: absolute;
+  left: 50%;
+  top: 52%;
+  transform: translate(-50%, -50%) scale(0.2);
+  opacity: 0;
+  font-size: clamp(4rem, 14vw, 7rem);
+  filter: drop-shadow(0 18px 22px rgba(255, 79, 163, 0.2));
+  z-index: 2;
+  pointer-events: none;
+}
+
+.heart-pop.show {
+  animation: heartPop 750ms cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+/* =========================
+   Confetti (injected by JS)
+   ========================= */
+#confettiRoot {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+  z-index: 50;
+}
+
+.confetti {
+  position: absolute;
+  top: -12px;
+  width: 10px;
+  height: 14px;
+  border-radius: 3px;
+  opacity: 0.95;
+  transform: translate3d(0, 0, 0) rotate(0deg);
+  animation: confettiFall var(--dur) linear var(--delay) forwards;
+}
+
+@keyframes confettiFall {
+  from {
+    transform: translate3d(0, -10px, 0) rotate(0deg);
+  }
+  to {
+    transform: translate3d(var(--drift), 110vh, 0) rotate(var(--spin));
+  }
+}
+
+/* =========================
+   Animations
+   ========================= */
+@keyframes floaty {
+  0%,
+  100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-8px);
+  }
+}
+
+@keyframes titleWiggle {
+  0%,
+  100% {
+    transform: rotate(0deg);
+  }
+  45% {
+    transform: rotate(-0.8deg);
+  }
+  55% {
+    transform: rotate(0.8deg);
+  }
+}
+
+@keyframes heartPop {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.2);
+  }
+  45% {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1.12);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.95);
+  }
+}
+
+/* =========================
+   Reduced motion support
+   ========================= */
+@media (prefers-reduced-motion: reduce) {
+  .card {
+    animation: none;
+  }
+
+  .title {
+    animation: none;
+  }
+
+  .btn {
+    transition: none; /* keep things calm */
+  }
+
+  .heart-pop.show {
+    animation: none;
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+
+  .confetti {
+    animation: none;
+    opacity: 0; /* effectively disables confetti visuals */
+  }
+}

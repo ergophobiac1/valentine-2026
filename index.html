@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, viewport-fit=cover"
+    />
+    <title>Be My Valentine?</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+
+  <body>
+    <main class="page">
+      <section class="card" id="card" aria-live="polite">
+        <div class="card__decor" aria-hidden="true"></div>
+
+        <header class="card__header">
+          <h1 class="title" id="title">Will you be my valentine?</h1>
+          <p class="subtitle" id="subtitle">I brought snacks and a million kisses 💘</p>
+        </header>
+
+        <!-- Button area MUST be relative, and buttons MUST be absolute inside it. -->
+        <div class="button-area" id="buttonArea" aria-label="Valentine choices">
+          <button class="btn btn--yes" id="yesBtn" type="button">
+            Yes
+          </button>
+
+          <button class="btn btn--no" id="noBtn" type="button">
+            No
+          </button>
+        </div>
+
+        <p class="hint" id="hint">
+          Tip: try clicking <strong>No</strong>… if you can 😇
+        </p>
+
+        <!-- Big heart pop (shown on acceptance) -->
+        <div class="heart-pop" id="heartPop" aria-hidden="true">❤</div>
+      </section>
+
+      <!-- Confetti gets injected here (kept outside the card so it can cover the page) -->
+      <div id="confettiRoot" aria-hidden="true"></div>
+    </main>
+
+    <script src="app.js"></script>
+  </body>
+</html>
