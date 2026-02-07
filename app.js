@@ -200,9 +200,9 @@
     }
   }
 
-  function launchConfetti() {
-    // Respect reduced motion: minimize/disable confetti.
-    if (reduceMotion) return;
+  function launchConfetti(force = false) {
+    // Respect reduced motion: minimize/disable confetti unless forced.
+    if (reduceMotion && !force) return;
 
     // Clear any old confetti.
     confettiRoot.textContent = "";
@@ -242,6 +242,13 @@
       piece.style.width = `${w}px`;
       piece.style.height = `${h}px`;
 
+      // If forcing (dev), apply inline animation + opacity so reduced-motion
+      // media queries don't hide the pieces.
+      if (force) {
+        piece.style.opacity = "0.95";
+        piece.style.animation = `confettiFall ${dur}ms linear ${delay}ms forwards`;
+      }
+
       confettiRoot.appendChild(piece);
 
       // Remove after animation
@@ -265,9 +272,9 @@
 
   function acceptValentine() {
     // Replace the initial banner with the new banner text (required).
-    title.textContent = "I love you!";
-    subtitle.textContent = "Yay! You just made my whole day 💞";
-    hint.textContent = "Best. Valentine. Ever. 🥰";
+    title.textContent = "Yayy! I love you Renu! ❤️";
+    subtitle.textContent = "You just made my whole day baby 💞";
+    hint.textContent = "PS - I can't wait for next month 🥰";
 
     // Disable/hide the button area (required).
     buttonArea.classList.add("is-disabled");
@@ -281,7 +288,7 @@
 
     // Celebration
     showHeartPop();
-    launchConfetti();
+    launchConfetti(true);
   }
 
   // --------------------------
@@ -307,6 +314,8 @@
   }
 
   function onYesClick() {
+    // Must chase the No button at least once before Yes works
+    if (evades === 0) return;
     acceptValentine();
   }
 
